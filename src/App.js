@@ -19,12 +19,21 @@ import pixel_2019 from "./assets/colours_pixel/pixel_2019.jpg"
 import pixel_2020 from "./assets/colours_pixel/pixel_2020.jpg"
 import pixel_2021 from "./assets/colours_pixel/pixel_2021.jpg"
 
+import waterfall_2021 from "./assets/sounds/waterfall_2021.mp3"
+import bourne_supremacy_movie_2004_1 from "./assets/sounds/bourne_supremacy_movie_2004_1.mp3"
+import rosa_luxemburg_movie_1986 from "./assets/sounds/rosa_luxemburg_movie_1986.mp3"
+import spring_2012 from "./assets/sounds/spring_2012.mp3"
+import wings_of_desire_movie_1987 from "./assets/sounds/wings_of_desire_movie_1987.mp3"
+import zoo_2021 from "./assets/sounds/zoo_2021.mp3"
+
+
 import {
   useState, useEffect  
 } from "react"
 
 function App() {
   const [ index, setIndex ] = useState(0)
+  const [ nextIndex, setNextIndex ] = useState(0)
 
   const images = [
     pixel_1943,
@@ -48,6 +57,28 @@ function App() {
     pixel_2021
   ]
 
+  const sounds = [
+    waterfall_2021,
+    bourne_supremacy_movie_2004_1,
+    rosa_luxemburg_movie_1986,
+    spring_2012,
+    wings_of_desire_movie_1987,
+    zoo_2021,
+    waterfall_2021,
+    bourne_supremacy_movie_2004_1,
+    rosa_luxemburg_movie_1986,
+    spring_2012,
+    wings_of_desire_movie_1987,
+    zoo_2021,
+    waterfall_2021,
+    bourne_supremacy_movie_2004_1,
+    rosa_luxemburg_movie_1986,
+    spring_2012,
+    wings_of_desire_movie_1987,
+    zoo_2021,
+    spring_2012
+  ]
+
   function updatePrev(prev){
     if(prev===images.length-1){
       return 0
@@ -56,27 +87,29 @@ function App() {
     }   
   }
 
-  function changeIndex(){
-      setIndex(updatePrev)
+  function changeIndex(fn){
+      fn(updatePrev)
   }
 
   function effect(){
-    setInterval(changeIndex, 3000)
+    setInterval(()=>changeIndex(setIndex), 3000)
+    setTimeout(()=>setInterval(()=>changeIndex(setNextIndex), 3000), 100)
   }
 
   useEffect(effect, [])
   
   function getNextImage(){
-    if(index===images.length-1){
+    if(nextIndex===images.length-1){
       return 0
     } else{
-      return index + 1
+      return nextIndex + 1
     }   
   }
 
   return (<>
-    <img src={images[index]}></img>
-    <img src={images[getNextImage()]} className="front-image"></img>
+    <img src={images[getNextImage()]}></img>
+    <img src={images[index]} className="front-image"></img>
+    <audio autoPlay src={sounds[index]} preload></audio>
   </>);
 }
 
